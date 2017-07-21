@@ -1,0 +1,59 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"> </script>
+<script>
+_data_ = ""
+raw = 
+//#data#
+;
+
+name = "#name#";
+
+data = [];
+
+for (i=0; i < raw.intervals.length; i++) {
+    data.push(raw.intervals[i].sum.bits_per_second/1000000)
+}
+
+var labels = new Array(data.length);
+
+function main() {
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+              label: 'Bandwidth (Mbits/s)',
+              fill: false,
+              pointRadius: 0,
+              data: data,
+              backgroundColor: "rgba(9,220,9,255)",
+              borderColor: "rgba(9,220,9,255)",
+              borderWidth: 1
+            }]
+        },
+        options: {
+            animation: false,
+            scales: {
+                yAxes : [{
+                    ticks : {
+                        max : 250,    
+                        min : 0
+                    }
+                }]
+            }
+        }
+    });
+    document.getElementById("title").innerHTML = name;
+}
+    
+</script>
+</head>
+<body onload="main()" style="background-color:white;">
+<div style="height:700px;width:900px">
+<h2 id="title"></h2>
+<canvas id="myChart" height="700" width="900"  style="height:700px;width:900px"></canvas>
+</div>
+</body>
+</html>
