@@ -21,13 +21,13 @@
 
 if [ $# -ne 2 ]
 then
-    echo generateAll template.html file*.json
+    echo generateAll template.html *.json
 fi
 
 rm -f bin/*
 rm -f images/*
 
-for f in src/$2
+for f in $2
 do 
     echo "Processing $f..."
     ./graphGen.sh $1 $f

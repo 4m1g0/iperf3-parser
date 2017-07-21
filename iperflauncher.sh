@@ -15,21 +15,25 @@ then
 fi
 date
 echo "[1/2] Iniciando prueba de UDP..."
-iperf3 -c $IP -u -b 1G -V -R -J -t 300 --logfile "results/$1_$(date +"%F_%R")_udp.json"
+filenameUdp="results/$1_$(date +"%F_%R")_udp.json"
+iperf3 -c $IP -u -b 1G -V -R -J -t 300 --logfile "$filenameUdp"
 if [ $? -ne 0 ]
 then
-    echo "ERROR: There was an error during the execution of iperf. Please check the result file in: results/$1_$(date +"%F_%R")_udp.json"
+    echo "ERROR: There was an error during the execution of iperf. Please check the result file in: $filenameUdp"
     exit
 fi
 echo "Finalizado."
 
 echo "[2/2] Iniciando prueba de TCP..."
-iperf3 -c $IP -V -R -J -t 300 --logfile "results/$1_$(date +"%F_%R")_tcp.json"
+filenameTcp="results/$1_$(date +"%F_%R")_tcp.json"
+iperf3 -c $IP -V -R -J -t 300 --logfile "$filenameTcp"
 if [ $? -ne 0 ]
 then
-    echo "ERROR: There was an error during the execution of iperf. Please check the result file in: results/$1_$(date +"%F_%R")_udp.json"
+    echo "ERROR: There was an error during the execution of iperf. Please check the result file in: $filenameTcp"
     exit
 fi
 echo "Finalizado :D"
 date
-
+echo "Generando informe..."
+./generateAll.sh template.html "$filenameTcp $filenameUdp"
+evince report.pdf
