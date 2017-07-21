@@ -21,7 +21,7 @@
 
 if [ $# -ne 2 ]
 then
-    echo generateAll template.html *.json
+    echo generateAll template.html "*.json"
 fi
 
 rm -f bin/*
