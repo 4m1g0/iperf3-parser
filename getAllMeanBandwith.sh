@@ -1,7 +1,6 @@
-#! /usr/bin/python3
+#! /usr/bin/bash
 
 #
-# main.py - Entry point for the application
 # Copyright 2017 Oscar Blanco.
 #
 # This library is free software; you can redistribute it and/or modify
@@ -19,26 +18,13 @@
 # 02110-1301 USA
 #
 
-import json
-import sys
-import numpy as np
+if [ $# -ne 1 ]
+then
+    echo getAllMeanBandwith "*.json"
+fi
 
-with open(sys.argv[1]) as data_file:    
-    data = json.load(data_file)
-    
-print(data['start']['connected'])
-
-#print(float(data['intervals'][0]['sum']['bits_per_second'])  float(data['intervals'][0]['sum']['bits_per_second']) +1)
-
-print(np.mean([x['sum']['bits_per_second'] for x in data['intervals']]))
-print(len([x['sum']['bits_per_second'] for x in data['intervals']]))
-print(len(data['intervals']))
-print(sum([x['sum']['bits_per_second'] for x in data['intervals']])/len(data['intervals']))
-
-
-#i = 0
-#speed = 0
-#for interval in data['intervals']:
-#    i += 1
-    
+for f in $1
+do 
+    echo $f : $(python3 mean_bandwidth.py $f)
+done
 
